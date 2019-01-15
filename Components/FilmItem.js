@@ -6,16 +6,16 @@ export default class FilmItem extends React.Component {
         let film = this.props.film;
         return (
             <View style={styles.container}>        
-            <View style={styles.illustration}> 
+            <View style={styles.illustration}>
                 <Image
                     style={styles.illustration}
-                    source={{uri: 'https://visualstudio.microsoft.com/wp-content/uploads/2016/06/android-1-562x309@2x-op-800x404.png'}}
+                    source={{uri: 'https:'+film.cover.url }}
                 />
                 </View>    
                 <View style={styles.description}>
-                    <Text style={styles.title}>{film.title}</Text>
-                    <Text style={styles.overview} numberOfLines={4}>Description: {film.overview}</Text>
-                    <Text style={styles.date}>Date: {film.release_date}</Text>
+                    <Text style={styles.title}>{film.name}</Text>
+                    <Text style={styles.overview} numberOfLines={4}>Description: {film.summary}</Text>
+                    <Text style={styles.date}>Date: {film.release_dates[0].m} {film.release_dates[0].y}</Text>
                 </View>
             </View>
         )
@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     description: {
-        maxWidth: 270,
+        maxWidth: 220,
         padding: 10,
     },
     illustration: {
         alignItems: 'center',
-        width: 50, 
-        height: 50,
-        margin: 10,
+        width: 80, 
+        height: 80,
+        marginLeft: 5,
     },
     title: {
         fontWeight: 'bold',

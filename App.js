@@ -10,7 +10,7 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <Navbar />
         <Search/>
-        <Films/>
+        {/* <Films/> */}
       </View>
     );
   }
@@ -20,7 +20,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgba(20,180,250,.2)',
-    /* alignItems: 'center',
-    justifyContent: 'center', */
   },
 });
