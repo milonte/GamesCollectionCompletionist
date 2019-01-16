@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, Button } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native';
+import {  Button } from 'react-native-elements';
 
 export default class GameItem extends React.Component {
     render() {
@@ -42,11 +43,17 @@ export default class GameItem extends React.Component {
                     <Text style={styles.overview} numberOfLines={4}>Description: {game.summary}</Text>
                 </View>
                 <View style={styles.details}>
-                <Button
+                {/* <Button
                     onPress={() => {}}
                     title="More Details"
                     accessibilityLabel="Learn more about this purple button"
-                />
+                /> */}
+                <Button
+                    raised
+                    icon={{ name: 'cached' }}
+                    backgroundColor='#5bf'
+                    title='MORE DETAILS'
+                    onPress={() => {}} />
                 </View>
             </View>
         )
