@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Search from './Components/Search'
 import Navbar from './Components/Navbar'
-import Films from './Components/Films'
 
 export default class App extends React.Component {
   render() {
@@ -10,7 +9,6 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <Navbar />
         <Search/>
-        {/* <Films/> */}
       </View>
     );
   }
