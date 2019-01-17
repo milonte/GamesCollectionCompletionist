@@ -3,7 +3,7 @@ import { View, TextInput, StyleSheet, FlatList } from 'react-native';
 import { SearchBar, Button } from 'react-native-elements';
 import gamesData from '../Helpers/gamesData'
 import { getApiDatas } from '../API/IGDB_API';
-import GameItem from './GameItem'
+import GameItemShort from './GameItem'
 
 
 export default class Search extends React.Component {
@@ -60,9 +60,6 @@ export default class Search extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                {/* <TextInput placeholder="Game to search"
-                style={styles.input}
-                onChangeText={(text) => this._searchTextInputChanged(text)}></TextInput> */}
                 <SearchBar
                     lightTheme
                     onChangeText={(text) => this._searchTextInputChanged(text)}
@@ -78,7 +75,7 @@ export default class Search extends React.Component {
                 <FlatList
                     data={this.state.games}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <GameItem game={item} />}
+                    renderItem={({ item }) => <GameItemShort game={item} />}
                 />
             </View>
         )
