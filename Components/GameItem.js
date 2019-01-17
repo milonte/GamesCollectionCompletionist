@@ -2,22 +2,16 @@ import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native';
 import {  Button } from 'react-native-elements';
 
-export default class GameItem extends React.Component {
+export default class GameItemShort extends React.Component {
     render() {
         let game = this.props.game;
         let illustrationElt = <Image style={styles.illustration} source={{ uri: 'https://via.placeholder.com/150' }} />;
         let releaseDateElt = <Text style={styles.date}> No Dates Found</Text>;
         let platformElt = <Text style={styles.platforms}> No Platform Found</Text>;
-        /* console.log(game); */
         if (game.cover) {
             illustrationElt = <Image style={styles.illustration} source={{ uri: 'https:' + game.cover.url }} />;
         }
         if (game.release_dates) {
-            /* game.release_dates.sort( (a,b) => {
-                if(a.y<b.y) return-1;
-                if(a.y>b.y) return 1;
-                return 0;
-            }); */
             releaseDateElt = <Text style={styles.date}>Date: {game.release_dates[0].m} {game.release_dates[0].y}</Text>;
         }
         if(game.platforms) {
@@ -26,7 +20,7 @@ export default class GameItem extends React.Component {
                 if(a.generation>b.generation) return 1;
                 return 0;
             });
-            platformElt = <Text style={styles.platforms}>Platforms: {game.platforms[0].name}</Text>;
+            platformElt = <Text style={styles.platforms}>{game.platforms[0].name}</Text>;
         }
         
         return (
@@ -39,15 +33,7 @@ export default class GameItem extends React.Component {
                     {releaseDateElt}
                     {platformElt}
                 </View>
-                <View style={styles.description}>
-                    <Text style={styles.overview} numberOfLines={4}>Description: {game.summary}</Text>
-                </View>
                 <View style={styles.details}>
-                {/* <Button
-                    onPress={() => {}}
-                    title="More Details"
-                    accessibilityLabel="Learn more about this purple button"
-                /> */}
                 <Button
                     raised
                     icon={{ name: 'cached' }}
@@ -77,15 +63,11 @@ const styles = StyleSheet.create({
     infos: {
         maxWidth: 200,
         padding: 10,
-    },
-    description: {
-        margin: 10,
-        textAlign: 'center',
         paddingTop: 10,
         paddingBottom: 10,
-        borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor: 'rgba(0,0,0,.1)',
+
     },
     illustration: {
         alignItems: 'center',
@@ -98,8 +80,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'rgba(20,160,250,.8)',
         textAlign: 'center',
-        marginBottom: 5,
-        paddingBottom: 5,
+
+        paddingBottom: 10,
         borderBottomWidth: 1,
         borderColor: 'rgba(0,0,0,.1)',
     },
@@ -110,6 +92,9 @@ const styles = StyleSheet.create({
         marginTop: 5,
         paddingTop: 5,
         fontStyle: 'italic',
+    },
+    platforms: {
+       
     },
     details: {
         width: "100%",
