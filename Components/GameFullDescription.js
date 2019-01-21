@@ -72,17 +72,6 @@ export default class GameFullDescription extends Component {
 
 
 const styles = StyleSheet.create({
-    /*   container: {
-          alignItems: 'center',
-          textAlign: 'center',
-          marginTop: 15,
-          maxWidth: 350,
-          borderWidth: 1,
-          borderColor: 'rgba(0,0,0,.1)',
-          borderRadius: 10,
-          backgroundColor: 'white',
-          padding: 10,
-      }, */
     infos: {
         padding: 10,
         paddingTop: 10,
