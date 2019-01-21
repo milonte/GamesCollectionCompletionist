@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Search from './Components/Search';
+import AppNavigator from './AppNavigator';
+import HomeScreen from './Components/HomeScreen';
 import TitleBar from './Components/TitleBar';
 import BottomBar from './Components/BottomBar';
 
@@ -8,12 +9,10 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TitleBar/>
-        <Search/>
-        <View style={styles.footer}>
+        {/* <TitleBar/> */}
 
-        <BottomBar />
-        </View>
+        <AppNavigator />
+        {/* <BottomBar nav={this.props.navigation}/> */}
       </View>
     );
   }

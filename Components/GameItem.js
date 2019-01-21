@@ -1,45 +1,50 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native';
-import {  Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 
 export default class GameItemShort extends React.Component {
     render() {
         let game = this.props.game;
-        let illustrationElt = <Image style={styles.illustration} source={{ uri: 'https://via.placeholder.com/150' }} />;
-        let releaseDateElt = <Text style={styles.date}> No Dates Found</Text>;
+        const monthNames = [
+            "January", "February", "March",
+            "April", "May", "June", "July",
+            "August", "September", "October",
+            "November", "December"
+        ];
         let platformElt = <Text style={styles.platforms}> No Platform Found</Text>;
+        let imageUri = 'https://via.placeholder.com/150';
         if (game.cover) {
-            illustrationElt = <Image style={styles.illustration} source={{ uri: 'https:' + game.cover.url }} />;
+            imageUri = 'https:' + game.cover.url.replace("t_thumb", "t_cover_big");
         }
+        let releaseDate = "Date not found";
         if (game.release_dates) {
-            releaseDateElt = <Text style={styles.date}>Date: {game.release_dates[0].m} {game.release_dates[0].y}</Text>;
+            releaseDate = monthNames[game.release_dates[0].m] + ' ' + game.release_dates[0].y;
         }
-        if(game.platforms) {
-             game.platforms.sort( (a,b) => {
-                if(a.generation<b.generation) return-1;
-                if(a.generation>b.generation) return 1;
+        if (game.platforms) {
+            game.platforms.sort((a, b) => {
+                if (a.generation < b.generation) return -1;
+                if (a.generation > b.generation) return 1;
                 return 0;
             });
             platformElt = <Text style={styles.platforms}>{game.platforms[0].name}</Text>;
         }
-        
         return (
             <View style={styles.container}>
                 <View>
-                    {illustrationElt}
+                    <Image style={styles.illustration} source={{ uri: imageUri }} />
                 </View>
                 <View style={styles.infos}>
                     <Text style={styles.title}>{game.name}</Text>
-                    {releaseDateElt}
-                    {platformElt}
+                    <Text>{releaseDate}</Text>
+                    <Text>{platformElt}</Text>
                 </View>
                 <View style={styles.details}>
-                <Button
-                    raised
-                    icon={{ name: 'cached' }}
-                    backgroundColor='#5bf'
-                    title='MORE DETAILS'
-                    onPress={() => {}} />
+                    <Button
+                        raised
+                        icon={{ name: 'cached' }}
+                        backgroundColor='#5bf'
+                        title='MORE DETAILS'
+                        onPress={() => this.props.nav.navigate('GameDetails', { game })} />
                 </View>
             </View>
         )
@@ -59,6 +64,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: 'white',
         padding: 10,
+    },
+    platformLogo: {
+       height: 20,
+       resizeMode: 'contain',
     },
     infos: {
         maxWidth: 200,
@@ -94,7 +103,7 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
     },
     platforms: {
-       
+
     },
     details: {
         width: "100%",
