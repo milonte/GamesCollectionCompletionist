@@ -45,7 +45,7 @@ export default class Search extends React.Component {
     _loadDatas() {
         // use API
         if (this.state.searchText.length > 0) {
-            let fields = 'name,rating,platforms.name,platforms.generation,popularity,rating,release_dates.m,release_dates.y,cover.url,slug,summary';
+            let fields = 'name,rating,platforms.name,platforms.generation,platforms.platform_logo.url,popularity,rating,release_dates.m,release_dates.y,cover.url,slug,summary';
             getApiDatas(this.state.searchText, fields).then(data => {
                 this._orderDatas(data);
                 this.setState({ games: data });
@@ -58,6 +58,7 @@ export default class Search extends React.Component {
     }
 
     render() {
+        //console.log(this.props.nav);
         return (
             <View style={styles.container}>
                 <SearchBar
@@ -75,7 +76,7 @@ export default class Search extends React.Component {
                 <FlatList
                     data={this.state.games}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <GameItemShort game={item} />}
+                    renderItem={({ item }) => <GameItemShort game={item} nav={this.props.nav} />}
                 />
             </View>
         )
