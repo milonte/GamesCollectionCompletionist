@@ -3,7 +3,11 @@ import { StyleSheet, View } from 'react-native';
 import { Header, Icon, Text } from 'react-native-elements';
 
 export default class BottomBar extends Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
+        let nav = this.props.nav;
         return (
             <View style={styles.container}>
                 <Header
@@ -23,7 +27,9 @@ export default class BottomBar extends Component {
                     }
                     rightComponent={
                         <View>
-                            <Icon name='gear' type='font-awesome' color='#5bf' onPress={() => { }} />
+                            <Icon name='gear' type='font-awesome' color='#5bf'  onPress={() =>
+                                nav.navigate('GameDetails')
+                            } />
                             <Text style={styles.text}>Settings</Text>
                         </View>
                     }
