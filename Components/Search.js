@@ -39,9 +39,9 @@ export default class Search extends React.Component {
             return 1;
         });
     }
-
-
-
+    
+    
+    
     _loadDatas() {
         // use API
         if (this.state.searchText.length > 0) {
@@ -51,14 +51,13 @@ export default class Search extends React.Component {
                 this.setState({ games: data });
             });
         }
-
+        
         // or use js Helper
         /* this._orderDatas(gamesData);
         this.setState({ games: gamesData }); */
     }
-
+    
     render() {
-        //console.log(this.props.nav);
         return (
             <View style={styles.container}>
                 <SearchBar
@@ -76,7 +75,7 @@ export default class Search extends React.Component {
                 <FlatList
                     data={this.state.games}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <GameItemShort game={item} nav={this.props.nav} />}
+                    renderItem={({ item }) => <GameItemShort game={item} nav={this.props.navigation} />}
                 />
             </View>
         )
@@ -85,6 +84,7 @@ export default class Search extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
+        padding: 5,
     },
     input: {
         backgroundColor: 'white',
