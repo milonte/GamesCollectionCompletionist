@@ -1,11 +1,47 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button, Tile } from 'react-native-elements';
+import { getGCCApiData ,setToGCCApi, removeToGCCApi } from '../API/GCC_API';
 
 
 export default class GameFullDescription extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            possessedGames: "",
+        }
+    }
+
+/*     componentDidMount() {
+        this.setState({ 
+            possessedGames: getGCCApiData(this.props.navigation.state.params.game.id) 
+        });
+    }
+ */
+    _possessButton(id) {
+        let button = "";
+        if(/* getGCCApiData(id) */true) {
+            button = <Button
+            raised
+            icon={{ name: 'check' }}
+            backgroundColor='#2c5'
+            title='I GOT IT !'
+            onPress={() => { setToGCCApi(id) }} />;
+        } else {
+            button = <Button
+            raised
+            icon={{ name: 'check' }}
+            backgroundColor='#2c5'
+            title='I DON T GOT IT !'
+            onPress={() => { setToGCCApi(id) }} />;
+        }
+        return button;
+    }
+
     render() {
+        
         const game = this.props.navigation.state.params.game;
+        //this._possessButton(game.id);
         const monthNames = [
             "January", "February", "March",
             "April", "May", "June", "July",
@@ -50,13 +86,14 @@ export default class GameFullDescription extends Component {
                                 icon={{ name: 'collections-bookmark' }}
                                 backgroundColor='#5bf'
                                 title='I WANT IT !'
-                                onPress={() => { }} />
-                            <Button
+                                onPress={() => { removeToGCCApi(game.id) }} />
+                                {this._possessButton(game.id)}
+                            {/* <Button
                                 raised
                                 icon={{ name: 'check' }}
                                 backgroundColor='#2c5'
                                 title='I GOT IT !'
-                                onPress={() => { }} />
+                                onPress={() => { setToGCCApi(game.id) }} /> */}
                         </View>
                     </View>
                 </View>

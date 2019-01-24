@@ -5,6 +5,7 @@ import { Button } from 'react-native-elements';
 export default class GameItemShort extends React.Component {
     render() {
         let game = this.props.game;
+        let possessedGames = this.props.possessedGames;
         const monthNames = [
             "January", "February", "March",
             "April", "May", "June", "July",
@@ -44,7 +45,7 @@ export default class GameItemShort extends React.Component {
                         icon={{ name: 'cached' }}
                         backgroundColor='#5bf'
                         title='MORE DETAILS'
-                        onPress={() => this.props.nav.navigate('GameDetails', { game })} />
+                        onPress={() => this.props.nav.navigate('GameDetails', { game, possessedGames })} />
                 </View>
             </View>
         )

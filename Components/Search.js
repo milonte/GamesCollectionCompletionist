@@ -2,7 +2,7 @@ import React from 'react'
 import { View, TextInput, StyleSheet, FlatList } from 'react-native';
 import { SearchBar, Button } from 'react-native-elements';
 import gamesData from '../Helpers/gamesData'
-import { getApiDatas } from '../API/IGDB_API';
+import { getIgdbNameSearchData } from '../API/IGDB_API';
 import GameItemShort from './GameItem'
 
 
@@ -46,7 +46,7 @@ export default class Search extends React.Component {
         // use API
         if (this.state.searchText.length > 0) {
             let fields = 'name,rating,platforms.name,platforms.generation,platforms.platform_logo.url,popularity,rating,release_dates.m,release_dates.y,cover.url,slug,summary';
-            getApiDatas(this.state.searchText, fields).then(data => {
+            getIgdbNameSearchData(this.state.searchText, fields).then(data => {
                 this._orderDatas(data);
                 this.setState({ games: data });
             });
