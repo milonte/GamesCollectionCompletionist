@@ -22,6 +22,7 @@ export default class Library extends Component {
             data.forEach(el => {
                 searchGames.push(el.game);
             });
+
             // Search games from IGDB API
             getIgdbIdSearchData(
                 searchGames.join(','),
@@ -44,7 +45,7 @@ export default class Library extends Component {
                             <GameItemShort
                                 game={item}
                                 nav={this.props.navigation}
-                                possessedGames={this.state.possessedGames}
+                                possessedGame={"true"}
                             />
                     }
                 />

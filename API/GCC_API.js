@@ -20,9 +20,10 @@ export function getGCCApiData(gameId) {
     const URL = LOCAL_IP + '/games/possess';
 
     const HEADERS = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Accept': 'application/json',
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             "game": gameId,
@@ -32,7 +33,8 @@ export function getGCCApiData(gameId) {
 
     return fetch(URL, HEADERS)
         //.then((resp) => console.log(resp._bodyText))
-        .then((resp) => resp.json())
+        .then((resp) => resp)
+        //.then((res) => console.log(res))
         .catch((err) => console.error(err))
 }
 

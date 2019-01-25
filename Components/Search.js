@@ -6,6 +6,7 @@ import { getIgdbNameSearchData } from '../API/IGDB_API';
 import GameItemShort from './GameItem'
 
 
+
 export default class Search extends React.Component {
 
     constructor(props) {
@@ -13,6 +14,7 @@ export default class Search extends React.Component {
         this.state = {
             games: [],
             searchText: "",
+            possessedGame: false,
         };
     }
 
@@ -39,9 +41,9 @@ export default class Search extends React.Component {
             return 1;
         });
     }
-    
-    
-    
+
+
+
     _loadDatas() {
         // use API
         if (this.state.searchText.length > 0) {
@@ -51,12 +53,12 @@ export default class Search extends React.Component {
                 this.setState({ games: data });
             });
         }
-        
+
         // or use js Helper
         /* this._orderDatas(gamesData);
         this.setState({ games: gamesData }); */
     }
-    
+
     render() {
         return (
             <View style={styles.container}>
@@ -71,11 +73,15 @@ export default class Search extends React.Component {
                     title='SEARCH'
                     onPress={(t) => this._loadDatas(t)} />
 
-               {/*  <Button title="Search" onPress={(t) => this._loadDatas(t)} /> */}
+                {/*  <Button title="Search" onPress={(t) => this._loadDatas(t)} /> */}
                 <FlatList
                     data={this.state.games}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <GameItemShort game={item} nav={this.props.navigation} />}
+                    renderItem={({ item }) =>
+                        <GameItemShort
+                            game={item}
+                            nav={this.props.navigation}
+                        />}
                 />
             </View>
         )

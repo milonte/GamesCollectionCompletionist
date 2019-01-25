@@ -1,11 +1,38 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-elements';
+import { getGCCApiData, getGCCApiDatas, setToGCCApi, removeToGCCApi } from '../API/GCC_API';
+
 
 export default class GameItemShort extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            possessedGame: this.props.possessedGame,
+        };
+    }
+
+    componentWillMount() {
+        if (!this.state.possessedGame) {
+            getGCCApiData(this.props.game.id)
+                .then(data => {
+                    //console.log(data)
+                    this.setState({
+                        possessedGame: data._bodyText
+                    });
+                });
+        }
+    }
+
+    _isPossessed() {
+
+        //console.log(this.state.possessedGame);
+    }
+
+
     render() {
         let game = this.props.game;
-        let possessedGames = this.props.possessedGames;
+        let possessedGame = this.state.possessedGame;
         const monthNames = [
             "January", "February", "March",
             "April", "May", "June", "July",
@@ -45,7 +72,7 @@ export default class GameItemShort extends React.Component {
                         icon={{ name: 'cached' }}
                         backgroundColor='#5bf'
                         title='MORE DETAILS'
-                        onPress={() => this.props.nav.navigate('GameDetails', { game, possessedGames })} />
+                        onPress={() => this.props.nav.navigate('GameDetails', { game, possessedGame })} />
                 </View>
             </View>
         )
@@ -67,8 +94,8 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     platformLogo: {
-       height: 20,
-       resizeMode: 'contain',
+        height: 20,
+        resizeMode: 'contain',
     },
     infos: {
         maxWidth: 200,
