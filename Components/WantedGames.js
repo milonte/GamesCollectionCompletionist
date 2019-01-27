@@ -18,10 +18,6 @@ export default class WantedGames extends Component {
         this._loadDatas();
     }
 
-    _update() {
-        this._loadDatas();
-    }
-
     _loadDatas() {
         this.setState({refreshing:true})
         let searchGames = [];

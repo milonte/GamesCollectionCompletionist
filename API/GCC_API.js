@@ -38,6 +38,44 @@ export function getGCCApiData(gameId, category) {
         .catch((err) => console.error(err))
 }
 
+export function getGccApiAllSuccesses() {
+    const URL = LOCAL_IP + '/success/all';
+
+    const HEADERS = {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+        },
+    };
+
+    return fetch(URL, HEADERS)
+        //.then((resp) => console.log(resp._bodyText))
+        .then((resp) => resp.json())
+        //.then((res) => console.log(res))
+        .catch((err) => console.error(err))
+}
+
+export function getGccApiUserSuccesses(user) {
+    const URL = LOCAL_IP + '/success/user';
+
+    const HEADERS = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "userId": 1
+        }),
+    };
+
+    return fetch(URL, HEADERS)
+        //.then((resp) => console.log(resp._bodyText))
+        .then((resp) => resp.json())
+        //.then((res) => console.log(res))
+        .catch((err) => console.error(err))
+}
+
 export function setToGCCApi(gameId, category) {
     const URL = LOCAL_IP + '/games/'+category+'/add';
 

@@ -4,6 +4,7 @@ import { Icon } from 'react-native-elements';
 import Home from './Components/HomeScreen';
 import Search from './Components/Search';
 import Library from './Components/Library';
+import Success from './Components/Success';
 import GameFullDescription from './Components/GameFullDescription';
 
 const AppNavigator = createStackNavigator({
@@ -36,6 +37,15 @@ const AppNavigator = createStackNavigator({
           },
         },
       },
+      Success: {
+        screen: Success,
+        navigationOptions: {
+          title: 'Success',
+          tabBarIcon: ({ focused, tintColor }) => {
+            return <Icon name='trophy' type='font-awesome' color={tintColor} />;
+          },
+        },
+      }
     }, {
         tabBarOptions: {
           showIcon: true,
