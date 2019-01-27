@@ -1,22 +1,56 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { Button } from 'react-native-elements';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
+import { getGCCApiData } from '../API/GCC_API';
+
 
 export default class GameItemShort extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            possessedGame: this.props.possessedGame,
+            wantedGame: this.props.wantedGame,
+        };
+    }
+
+    componentWillMount() {
+        if (!this.state.possessedGame) {
+            getGCCApiData(this.props.game.id, "possess")
+                .then(data => {
+                    //console.log(data)
+                    this.setState({
+                        possessedGame: data
+                    });
+                });
+                getGCCApiData(this.props.game.id, "wanted")
+                .then(data => {
+                    //console.log(data)
+                    this.setState({
+                        wantedGame: data
+                    });
+                });
+        }
+    }
+
     render() {
         let game = this.props.game;
+        let possessedGame = this.state.possessedGame;
+        //console.log(possessedGame);
+        let wantedGame = this.state.wantedGame;
+        let platformElt = <Text style={styles.platforms}> No Platform Found</Text>;
+        let imageUri = 'https://via.placeholder.com/150';
+        let releaseDate = "Date not found";
+        let possessedElt = <Text></Text>;
+        let wantedElt = <Text></Text>;
         const monthNames = [
             "January", "February", "March",
             "April", "May", "June", "July",
             "August", "September", "October",
             "November", "December"
         ];
-        let platformElt = <Text style={styles.platforms}> No Platform Found</Text>;
-        let imageUri = 'https://via.placeholder.com/150';
         if (game.cover) {
             imageUri = 'https:' + game.cover.url.replace("t_thumb", "t_cover_big");
         }
-        let releaseDate = "Date not found";
         if (game.release_dates) {
             releaseDate = monthNames[game.release_dates[0].m] + ' ' + game.release_dates[0].y;
         }
@@ -28,25 +62,33 @@ export default class GameItemShort extends React.Component {
             });
             platformElt = <Text style={styles.platforms}>{game.platforms[0].name}</Text>;
         }
+        if (possessedGame) {
+            possessedElt = <View style={styles.details}>
+                <Icon styles={styles.possessedIcon} name='check' type='font-awesome' color='green' />
+                <Text style={styles.possessedText}>You got it !</Text>
+            </View>
+        }
+        if (wantedGame && !possessedGame) {
+            wantedElt = <View style={styles.details}>
+                <Icon styles={styles.wantedIcon} name='bookmark' type='font-awesome' color='#5bf' />
+                <Text style={styles.wantedText}>You want it !</Text>
+            </View>
+        }
         return (
-            <View style={styles.container}>
+            <TouchableOpacity onPress={() => this.props.nav.navigate('GameDetails', { game, possessedGame, wantedGame })} style={styles.container}>
                 <View>
                     <Image style={styles.illustration} source={{ uri: imageUri }} />
                 </View>
                 <View style={styles.infos}>
-                    <Text style={styles.title}>{game.name}</Text>
+                    <View style={styles.title}>
+                        <Text style={styles.titleText}>{game.name}</Text>
+                    </View>
                     <Text>{releaseDate}</Text>
                     <Text>{platformElt}</Text>
                 </View>
-                <View style={styles.details}>
-                    <Button
-                        raised
-                        icon={{ name: 'cached' }}
-                        backgroundColor='#5bf'
-                        title='MORE DETAILS'
-                        onPress={() => this.props.nav.navigate('GameDetails', { game })} />
-                </View>
-            </View>
+                {possessedElt}
+                {wantedElt}
+            </TouchableOpacity>
         )
     }
 }
@@ -57,7 +99,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'center',
-        marginTop: 15,
+        marginBottom: 15,
         maxWidth: 350,
         borderWidth: 1,
         borderColor: 'rgba(0,0,0,.1)',
@@ -66,16 +108,14 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     platformLogo: {
-       height: 20,
-       resizeMode: 'contain',
+        height: 20,
+        resizeMode: 'contain',
     },
     infos: {
-        maxWidth: 200,
+        flex: 1,
         padding: 10,
         paddingTop: 10,
         paddingBottom: 10,
-        borderBottomWidth: 1,
-        borderColor: 'rgba(0,0,0,.1)',
 
     },
     illustration: {
@@ -86,26 +126,42 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     title: {
-        fontWeight: 'bold',
-        color: 'rgba(20,160,250,.8)',
-        textAlign: 'center',
-
+        flexDirection: 'row',
         paddingBottom: 10,
         borderBottomWidth: 1,
         borderColor: 'rgba(0,0,0,.1)',
     },
-    overview: {
+    titleText: {
+        fontWeight: 'bold',
+        color: 'rgba(20,160,250,.8)',
+        textAlign: 'center',
     },
-    date: {
-        textAlign: 'left',
-        marginTop: 5,
-        paddingTop: 5,
-        fontStyle: 'italic',
-    },
-    platforms: {
-
+    possessed: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        color: "green",
     },
     details: {
+        borderTopWidth: 1,
+        borderColor: 'rgba(0,0,0,.1)',
         width: "100%",
-    }
+        justifyContent: 'center',
+        flexDirection: 'row',
+        paddingTop: 5,
+        //backgroundColor: 'rgba(0,150,0,.4)'
+    },
+    possessedIcon: {
+        
+    },
+    possessedText: {
+        color: 'green',
+        alignSelf: 'center',
+        marginLeft: 10,
+    },
+    wantedText: {
+        color: '#5bf',
+        alignSelf: 'center',
+        marginLeft: 10,
+    },
 });

@@ -1,7 +1,12 @@
+private/ApiKeys.js
+private/Localhost.js
 node_modules/**/*
+private/Localhost.js
+private/ApiKeys.js
 .expo/*
 npm-debug.*
 *.jks
 *.p12
 *.key
 *.mobileprovision
+

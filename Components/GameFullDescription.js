@@ -1,9 +1,76 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button, Tile } from 'react-native-elements';
+import { setToGCCApi, removeToGCCApi } from '../API/GCC_API';
 
 
 export default class GameFullDescription extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            possessedGame: this.props.navigation.state.params.possessedGame,
+            wantedGame: this.props.navigation.state.params.wantedGame,
+        };
+    }
+
+    _possessButton(id) {
+        let button = <Text></Text>;
+        if(true == this.state.possessedGame) {
+            button = <Button
+            raised
+            icon={{ name: 'delete' }}
+            backgroundColor='red'
+            title='I DON T GOT IT !'
+            onPress={() => { 
+                removeToGCCApi(id, "possess"),
+                this.setState({
+                    possessedGame: false,
+                })
+                 }} />;
+        } else if(false == this.state.possessedGame) {
+            button = <Button
+            raised
+            icon={{ name: 'check' }}
+            backgroundColor='#2c5'
+            title='I GOT IT !'
+            onPress={() => {
+                setToGCCApi(id, "possess"),
+                this.setState({
+                    possessedGame: true,
+                    wantedGame: false,
+                })}} />;
+        }
+        return button;
+    }
+
+    _wantedButton(id) {
+        let button = <Text></Text>;
+        if(false == this.state.possessedGame && this.state.wantedGame) {
+            button = <Button
+            raised
+            icon={{ name: 'delete' }}
+            backgroundColor='red'
+            title='I DON T WANT IT !'
+            onPress={() => {
+                removeToGCCApi(id, "wanted"),
+                this.setState({
+                    wantedGame: false,
+                })}} />;
+        } else if (false == this.state.possessedGame && !this.state.wantedGame) {
+            button = <Button
+            raised
+            icon={{ name: 'collections-bookmark' }}
+            backgroundColor='#5bf'
+            title='I WANT IT !'
+            onPress={() => {
+                setToGCCApi(id, "wanted"),
+                this.setState({
+                    wantedGame: true,
+                })}} />
+        }
+        return button;
+    }
+
     render() {
         const game = this.props.navigation.state.params.game;
         const monthNames = [
@@ -45,18 +112,8 @@ export default class GameFullDescription extends Component {
                     <View style={styles.overlay}>
                         <Text style={styles.title}>{game.name}</Text>
                         <View style={styles.buttons}>
-                            <Button
-                                raised
-                                icon={{ name: 'collections-bookmark' }}
-                                backgroundColor='#5bf'
-                                title='I WANT IT !'
-                                onPress={() => { }} />
-                            <Button
-                                raised
-                                icon={{ name: 'check' }}
-                                backgroundColor='#2c5'
-                                title='I GOT IT !'
-                                onPress={() => { }} />
+                            {this._wantedButton(game.id, false)}
+                            {this._possessButton(game.id,)} 
                         </View>
                     </View>
                 </View>
