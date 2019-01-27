@@ -73,7 +73,6 @@ export default class Search extends React.Component {
                     title='SEARCH'
                     onPress={(t) => this._loadDatas(t)} />
 
-                {/*  <Button title="Search" onPress={(t) => this._loadDatas(t)} /> */}
                 <FlatList
                     data={this.state.games}
                     keyExtractor={(item) => item.id.toString()}

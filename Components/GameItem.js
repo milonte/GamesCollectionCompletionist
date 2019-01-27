@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'center',
-        marginTop: 15,
+        marginBottom: 15,
         maxWidth: 350,
         borderWidth: 1,
         borderColor: 'rgba(0,0,0,.1)',

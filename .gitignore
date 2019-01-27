@@ -5,3 +5,5 @@ npm-debug.*
 *.p12
 *.key
 *.mobileprovision
+private/ApiKeys.js
+private/Localhost.js

@@ -11,7 +11,8 @@ export function getIgdbNameSearchData(search, fields='*') {
     };
     
     return fetch(URL, HEADERS)
-    .then((resp) => resp.json())
+    .then((resp) => resp.json(), console.log("Request !"))
+    //.then((resp) => console.log(resp))
     .catch((err) =>console.error(err))
 }
 

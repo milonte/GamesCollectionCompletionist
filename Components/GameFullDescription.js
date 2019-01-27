@@ -72,10 +72,7 @@ export default class GameFullDescription extends Component {
     }
 
     render() {
-        //const possessedGame = this.props.navigation.state.params.possessedGame;
-        //console.log(possessedGame);
         const game = this.props.navigation.state.params.game;
-        //this._possessButton(game.id);
         const monthNames = [
             "January", "February", "March",
             "April", "May", "June", "July",
@@ -115,20 +112,8 @@ export default class GameFullDescription extends Component {
                     <View style={styles.overlay}>
                         <Text style={styles.title}>{game.name}</Text>
                         <View style={styles.buttons}>
-                            {/* <Button
-                                raised
-                                icon={{ name: 'collections-bookmark' }}
-                                backgroundColor='#5bf'
-                                title='I WANT IT !'
-                                onPress={() => { removeToGCCApi(game.id) }} />*/}
                             {this._wantedButton(game.id, false)}
                             {this._possessButton(game.id,)} 
-                            {/* <Button
-                                raised
-                                icon={{ name: 'check' }}
-                                backgroundColor='#2c5'
-                                title='I GOT IT !'
-                                onPress={() => { setToGCCApi(game.id) }} /> */}
                         </View>
                     </View>
                 </View>
