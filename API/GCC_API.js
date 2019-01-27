@@ -1,7 +1,7 @@
 import { LOCAL_IP } from '../private/Localhost';
 
-export function getGCCApiDatas() {
-    const URL = LOCAL_IP + '/games/possess/all';
+export function getGCCApiDatas(category) {
+    const URL = LOCAL_IP + '/games/'+category+'/all';
 
     const HEADERS = {
         method: 'GET',
@@ -16,8 +16,8 @@ export function getGCCApiDatas() {
         .catch((err) => console.error(err))
 }
 
-export function getGCCApiData(gameId) {
-    const URL = LOCAL_IP + '/games/possess';
+export function getGCCApiData(gameId, category) {
+    const URL = LOCAL_IP + '/games/'+category;
 
     const HEADERS = {
         method: 'POST',
@@ -33,13 +33,13 @@ export function getGCCApiData(gameId) {
 
     return fetch(URL, HEADERS)
         //.then((resp) => console.log(resp._bodyText))
-        .then((resp) => resp)
+        .then((resp) => resp.json())
         //.then((res) => console.log(res))
         .catch((err) => console.error(err))
 }
 
-export function setToGCCApi(gameId) {
-    const URL = LOCAL_IP + '/games/possess/add';
+export function setToGCCApi(gameId, category) {
+    const URL = LOCAL_IP + '/games/'+category+'/add';
 
     const HEADERS = {
         method: 'POST',
@@ -60,8 +60,8 @@ export function setToGCCApi(gameId) {
         .catch((err) => console.log(err))
 }
 
-export function removeToGCCApi(gameId) {
-    const URL = LOCAL_IP + '/games/possess/remove';
+export function removeToGCCApi(gameId, category) {
+    const URL = LOCAL_IP + '/games/'+category+'/remove';
 
     const HEADERS = {
         method: 'POST',

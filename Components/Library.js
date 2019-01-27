@@ -18,7 +18,7 @@ export default class Library extends Component {
         let searchGames = [];
         let fields = 'name,rating,platforms.name,platforms.generation,platforms.platform_logo.url,popularity,rating,release_dates.m,release_dates.y,cover.url,slug,summary';
         // Search games from local API Database
-        getGCCApiDatas().then(data => {
+        getGCCApiDatas("possess").then(data => {
             data.forEach(el => {
                 searchGames.push(el.game);
             });
@@ -45,7 +45,7 @@ export default class Library extends Component {
                             <GameItemShort
                                 game={item}
                                 nav={this.props.navigation}
-                                possessedGame={"true"}
+                                possessedGame={true}
                             />
                     }
                 />
