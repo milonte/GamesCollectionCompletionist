@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, FlatList, ScrollView, RefreshControl } from 'react-native'
+import * as Progress from 'react-native-progress';
 import { getGccApiAllSuccesses, getGccApiUserSuccesses } from '../API/GCC_API';
 import SuccessItem from './SuccessItem';
 
@@ -19,23 +20,22 @@ export default class Success extends Component {
             .then(data => {
                 this.setState({ successes: data });
             });
-        
         this._loadDatas();
     }
 
     _loadDatas() {
         this.setState({ refreshing: true });
         getGccApiUserSuccesses(1)
-        .then(data => {
-            this.setState({ userSuccesses: data });
-        });
+            .then(data => {
+                this.setState({ userSuccesses: data });
+            });
         this.setState({ refreshing: false });
     }
 
     _isUserGetSuccess(name) {
         let result = false;
-        this.state.userSuccesses.forEach( success => {
-            if(success == name) {
+        this.state.userSuccesses.forEach(success => {
+            if (success == name) {
                 result = true;
             }
         });
@@ -43,7 +43,12 @@ export default class Success extends Component {
     }
 
     render() {
-
+        let userSuccessCount = this.state.userSuccesses.length;
+        let successCount = this.state.successes.length;
+        let progressValue = userSuccessCount / successCount;
+        if(!(progressValue > 0)) {
+            progressValue = 0;
+        }
         return (
             <View>
                 <ScrollView style={styles.container} refreshControl={
@@ -52,7 +57,17 @@ export default class Success extends Component {
                         refreshing={this.state.refreshing}
                     />
                 }>
-                    <Text style={styles.refreshText}>Scroll Top to refresh</Text>
+                    <View style={styles.bar}>
+                        <Text style={styles.barText}>{userSuccessCount} successes on {successCount} complete !</Text>
+                        <Progress.Bar
+                            progress={progressValue}
+                            width={300}
+                            height={15}
+                            borderRadius={5}
+                            color='green'
+                        />
+                    </View>
+                    {/*                     <Text style={styles.refreshText}>Scroll Top to refresh</Text> */}
                     <FlatList
                         data={this.state.successes}
                         keyExtractor={(item) => item.id.toString()}
@@ -71,4 +86,17 @@ export default class Success extends Component {
     }
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    bar: {
+        paddingTop: 20,
+        paddingBottom: 20,
+        alignContent: 'center',
+        alignSelf: 'center',
+        alignItems: 'center',
+    },
+    barText: {
+        color: 'green',
+        paddingBottom: 5,
+        fontWeight: 'bold',
+    },
+})

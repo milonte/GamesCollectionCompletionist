@@ -32,15 +32,25 @@ export default class SuccessItem extends React.Component {
     render() {
         let success = this.props.success;
         let userSuccess = this.props.userSuccess;
-        console.log(userSuccess);
-        let userSuccessElt = <Text></Text>;
+        let successStyle = styles.noGetSuccess;
+        let userSuccessElt = <Icon raised styles={styles.possessedIcon} name={success.image_url} type='font-awesome' color='grey' size={20} />;
         if (userSuccess) {
-            userSuccessElt = <Icon styles={styles.possessedIcon} name='check' type='font-awesome' color='green' />
+            successStyle = styles.getSuccess;
+            userSuccessElt = <Icon raised styles={styles.possessedIcon} name={success.image_url} type='font-awesome' color='green' size={25} />
         }
         return (
             <View style={styles.container}>
-                {userSuccessElt}
-                <Text>{success.name}</Text>
+                <View style={successStyle}>
+                    <View>
+                        {userSuccessElt}
+                    </View>
+                    <View style={styles.infos}>
+                        <View style={styles.title}>
+                            <Text style={styles.titleText}>{success.title}</Text>
+                        </View>
+                        <Text>{success.description}</Text>
+                    </View>
+                </View>
             </View>
         )
     }
@@ -48,17 +58,27 @@ export default class SuccessItem extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
+        alignItems: 'center',
+        //maxWidth: 350,
+        backgroundColor: 'white',
+        padding: 5,
+    },
+    noGetSuccess: {
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        alignItems: 'center',
-        marginBottom: 15,
-        maxWidth: 350,
         borderWidth: 1,
-        borderColor: 'rgba(0,0,0,.1)',
         borderRadius: 10,
-        backgroundColor: 'white',
-        padding: 10,
+        borderColor: 'rgba(0,0,0,.1)',
+    },
+    getSuccess: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: 'green',
+        backgroundColor: 'rgba(50,180,100,.1)',
     },
     platformLogo: {
         height: 20,
