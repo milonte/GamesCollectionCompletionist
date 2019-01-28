@@ -1,72 +1,179 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { showMessage, hideMessage } from "react-native-flash-message";
 import { Button, Tile } from 'react-native-elements';
-import { setToGCCApi, removeToGCCApi } from '../API/GCC_API';
+import { getGCCApiDatas ,setToGCCApi, removeToGCCApi, getGccApiUserSuccesses, setToGccApiUserSuccess } from '../API/GCC_API';
 
 
 export default class GameFullDescription extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            possessedGames: 0,
+            wantedGames: 0,
             possessedGame: this.props.navigation.state.params.possessedGame,
             wantedGame: this.props.navigation.state.params.wantedGame,
+            userSuccesses : [],
+            userSuccessUpdate: false,
         };
+    }
+
+    componentDidMount() {
+        this._loadApiSuccess();
+    }
+
+    _loadApiSuccess() {
+        getGccApiUserSuccesses(1)
+        .then(data => {
+            this.setState({ userSuccesses: data });
+        });
+    }
+
+    _checkSuccess() {
+        this._loadApiSuccess();
+       getGCCApiDatas("possess")
+       .then(data => {
+
+           if(data.length >= 0 && !this.state.userSuccesses.includes("possess_1")) {
+            setToGccApiUserSuccess(1, 1);
+            showMessage({
+                message: "New Success !",
+                description: "Your first game !",
+                type: "success",
+            });
+           }
+
+           if(data.length >= 4 && !this.state.userSuccesses.includes("possess_5")) {
+            setToGccApiUserSuccess(1, 2);
+            showMessage({
+                message: "New Success !",
+                description: "Five games !",
+                type: "success",
+            });
+           }
+
+           if(data.length >= 9 && !this.state.userSuccesses.includes("possess_10")) {
+            setToGccApiUserSuccess(1, 3);
+            showMessage({
+                message: "New Success !",
+                description: "Ten games !",
+                type: "success",
+            });
+           }
+
+        });
+       getGCCApiDatas("wanted")
+       .then(data => {
+
+        if(data.length >= 0 && !this.state.userSuccesses.includes("wanted_1")) {
+         setToGccApiUserSuccess(1, 4);
+         showMessage({
+             message: "New Success !",
+             description: "You want this !",
+             type: "success",
+         });
+        }
+
+        if(data.length >= 4 && !this.state.userSuccesses.includes("wanted_5")) {
+         setToGccApiUserSuccess(1, 5);
+         showMessage({
+             message: "New Success !",
+             description: "Five games wanted !",
+             type: "success",
+         });
+        }
+
+        if(data.length >= 9 && !this.state.userSuccesses.includes("wanted_10")) {
+         setToGccApiUserSuccess(1, 6);
+         showMessage({
+             message: "New Success !",
+             description: "Ten games wanted !",
+             type: "success",
+         });
+        }
+
+       });
     }
 
     _possessButton(id) {
         let button = <Text></Text>;
-        if(true == this.state.possessedGame) {
+        if (true == this.state.possessedGame) {
             button = <Button
-            raised
-            icon={{ name: 'delete' }}
-            backgroundColor='red'
-            title='I DON T GOT IT !'
-            onPress={() => { 
-                removeToGCCApi(id, "possess"),
-                this.setState({
-                    possessedGame: false,
-                })
-                 }} />;
-        } else if(false == this.state.possessedGame) {
+                raised
+                icon={{ name: 'delete' }}
+                backgroundColor='red'
+                title='I DON T GOT IT !'
+                onPress={() => {
+                    showMessage({
+                        message: "Game removed",
+                        description: "So sad...",
+                        type: "danger",
+                    });
+                    removeToGCCApi(id, "possess"),
+                        this.setState({
+                            possessedGame: false,
+                        })
+                }} />;
+        } else if (false == this.state.possessedGame) {
             button = <Button
-            raised
-            icon={{ name: 'check' }}
-            backgroundColor='#2c5'
-            title='I GOT IT !'
-            onPress={() => {
-                setToGCCApi(id, "possess"),
-                this.setState({
-                    possessedGame: true,
-                    wantedGame: false,
-                })}} />;
+                raised
+                icon={{ name: 'check' }}
+                backgroundColor='#2c5'
+                title='I GOT IT !'
+                onPress={() => {
+                    this._checkSuccess();
+                    showMessage({
+                        message: "Game added",
+                        description: "Well done ! One more game !",
+                        type: "success",
+                    });
+                    setToGCCApi(id, "possess"),
+                        this.setState({
+                            possessedGame: true,
+                            wantedGame: false,
+                        })
+                }} />;
         }
         return button;
     }
 
     _wantedButton(id) {
         let button = <Text></Text>;
-        if(false == this.state.possessedGame && this.state.wantedGame) {
+        if (false == this.state.possessedGame && this.state.wantedGame) {
             button = <Button
-            raised
-            icon={{ name: 'delete' }}
-            backgroundColor='red'
-            title='I DON T WANT IT !'
-            onPress={() => {
-                removeToGCCApi(id, "wanted"),
-                this.setState({
-                    wantedGame: false,
-                })}} />;
+                raised
+                icon={{ name: 'delete' }}
+                backgroundColor='red'
+                title='I DON T WANT IT !'
+                onPress={() => {
+                    showMessage({
+                        message: "Game removed",
+                        description: "So sad...",
+                        type: "danger",
+                    });
+                    removeToGCCApi(id, "wanted"),
+                        this.setState({
+                            wantedGame: false,
+                        })
+                }} />;
         } else if (false == this.state.possessedGame && !this.state.wantedGame) {
             button = <Button
-            raised
-            icon={{ name: 'collections-bookmark' }}
-            backgroundColor='#5bf'
-            title='I WANT IT !'
-            onPress={() => {
-                setToGCCApi(id, "wanted"),
-                this.setState({
-                    wantedGame: true,
-                })}} />
+                raised
+                icon={{ name: 'collections-bookmark' }}
+                backgroundColor='#5bf'
+                title='I WANT IT !'
+                onPress={() => {
+                    this._checkSuccess();
+                    showMessage({
+                        message: "Game added",
+                        description: "Well done ! One more game !",
+                        type: "info",
+                    });
+                    setToGCCApi(id, "wanted"),
+                        this.setState({
+                            wantedGame: true,
+                        })
+                }} />
         }
         return button;
     }
@@ -82,7 +189,7 @@ export default class GameFullDescription extends Component {
 
         let imageUri = 'https://via.placeholder.com/150';
         if (game.cover) {
-            imageUri = 'https:' + game.cover.url.replace("t_thumb","t_cover_big");
+            imageUri = 'https:' + game.cover.url.replace("t_thumb", "t_cover_big");
         }
 
         let releaseDate = "Date nor found";
@@ -113,7 +220,7 @@ export default class GameFullDescription extends Component {
                         <Text style={styles.title}>{game.name}</Text>
                         <View style={styles.buttons}>
                             {this._wantedButton(game.id, false)}
-                            {this._possessButton(game.id,)} 
+                            {this._possessButton(game.id)}
                         </View>
                     </View>
                 </View>
