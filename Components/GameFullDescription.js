@@ -65,7 +65,7 @@ export default class GameFullDescription extends Component {
        getGCCApiDatas("wanted")
        .then(data => {
 
-        if(data.length >= 0 && !this.state.userSuccesses.includes("wanted_1")) {
+        if(data.length >= 0 && !this.state.userSuccesses.includes("want_1")) {
          setToGccApiUserSuccess(1, 4);
          showMessage({
              message: "New Success !",
@@ -74,7 +74,7 @@ export default class GameFullDescription extends Component {
          });
         }
 
-        if(data.length >= 4 && !this.state.userSuccesses.includes("wanted_5")) {
+        if(data.length >= 4 && !this.state.userSuccesses.includes("want_5")) {
          setToGccApiUserSuccess(1, 5);
          showMessage({
              message: "New Success !",
@@ -83,7 +83,7 @@ export default class GameFullDescription extends Component {
          });
         }
 
-        if(data.length >= 9 && !this.state.userSuccesses.includes("wanted_10")) {
+        if(data.length >= 9 && !this.state.userSuccesses.includes("want_10")) {
          setToGccApiUserSuccess(1, 6);
          showMessage({
              message: "New Success !",
