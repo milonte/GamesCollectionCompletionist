@@ -34,7 +34,7 @@ export default class GameFullDescription extends Component {
        getGCCApiDatas("possess")
        .then(data => {
 
-           if(data.length >= 1 && !this.state.userSuccesses.includes("possess_1")) {
+           if(data.length >= 0 && !this.state.userSuccesses.includes("possess_1")) {
             setToGccApiUserSuccess(1, 1);
             showMessage({
                 message: "New Success !",
@@ -43,7 +43,7 @@ export default class GameFullDescription extends Component {
             });
            }
 
-           if(data.length >= 5 && !this.state.userSuccesses.includes("possess_5")) {
+           if(data.length >= 4 && !this.state.userSuccesses.includes("possess_5")) {
             setToGccApiUserSuccess(1, 2);
             showMessage({
                 message: "New Success !",
@@ -52,7 +52,7 @@ export default class GameFullDescription extends Component {
             });
            }
 
-           if(data.length >= 10 && !this.state.userSuccesses.includes("possess_10")) {
+           if(data.length >= 9 && !this.state.userSuccesses.includes("possess_10")) {
             setToGccApiUserSuccess(1, 3);
             showMessage({
                 message: "New Success !",
@@ -65,7 +65,7 @@ export default class GameFullDescription extends Component {
        getGCCApiDatas("wanted")
        .then(data => {
 
-        if(data.length >= 1 && !this.state.userSuccesses.includes("wanted_1")) {
+        if(data.length >= 0 && !this.state.userSuccesses.includes("wanted_1")) {
          setToGccApiUserSuccess(1, 4);
          showMessage({
              message: "New Success !",
@@ -74,7 +74,7 @@ export default class GameFullDescription extends Component {
          });
         }
 
-        if(data.length >= 5 && !this.state.userSuccesses.includes("wanted_5")) {
+        if(data.length >= 4 && !this.state.userSuccesses.includes("wanted_5")) {
          setToGccApiUserSuccess(1, 5);
          showMessage({
              message: "New Success !",
@@ -83,7 +83,7 @@ export default class GameFullDescription extends Component {
          });
         }
 
-        if(data.length >= 10 && !this.state.userSuccesses.includes("wanted_10")) {
+        if(data.length >= 9 && !this.state.userSuccesses.includes("wanted_10")) {
          setToGccApiUserSuccess(1, 6);
          showMessage({
              message: "New Success !",
