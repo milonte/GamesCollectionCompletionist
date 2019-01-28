@@ -17,14 +17,12 @@ export default class GameItemShort extends React.Component {
         if (!this.state.possessedGame) {
             getGCCApiData(this.props.game.id, "possess")
                 .then(data => {
-                    //console.log(data)
                     this.setState({
                         possessedGame: data
                     });
                 });
                 getGCCApiData(this.props.game.id, "wanted")
                 .then(data => {
-                    //console.log(data)
                     this.setState({
                         wantedGame: data
                     });
@@ -35,7 +33,6 @@ export default class GameItemShort extends React.Component {
     render() {
         let game = this.props.game;
         let possessedGame = this.state.possessedGame;
-        //console.log(possessedGame);
         let wantedGame = this.state.wantedGame;
         let platformElt = <Text style={styles.platforms}> No Platform Found</Text>;
         let imageUri = 'https://via.placeholder.com/150';
@@ -100,7 +97,6 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         alignItems: 'center',
         marginBottom: 15,
-        maxWidth: 350,
         borderWidth: 1,
         borderColor: 'rgba(0,0,0,.1)',
         borderRadius: 10,

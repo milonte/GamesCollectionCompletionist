@@ -1,18 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AppNavigator from './AppNavigator';
-import HomeScreen from './Components/HomeScreen';
-import TitleBar from './Components/TitleBar';
-import BottomBar from './Components/BottomBar';
+import FlashMessage from "react-native-flash-message";
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <TitleBar/> */}
-
         <AppNavigator />
-        {/* <BottomBar nav={this.props.navigation}/> */}
+        <FlashMessage position="top" />
       </View>
     );
   }
