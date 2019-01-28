@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { showMessage, hideMessage } from "react-native-flash-message";
 import { Button, Tile } from 'react-native-elements';
-import { setToGCCApi, removeToGCCApi, getGccApiUserSuccesses } from '../API/GCC_API';
+import { getGCCApiDatas ,setToGCCApi, removeToGCCApi, getGccApiUserSuccesses, setToGccApiUserSuccess } from '../API/GCC_API';
 
 
 export default class GameFullDescription extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            possessedGames: 0,
+            wantedGames: 0,
             possessedGame: this.props.navigation.state.params.possessedGame,
             wantedGame: this.props.navigation.state.params.wantedGame,
             userSuccesses : [],
@@ -28,11 +30,69 @@ export default class GameFullDescription extends Component {
     }
 
     _checkSuccess() {
-        if(this._loadApiSuccess().lenght > this.state.userSuccesses.length) {
-            this.setState({
-                userSuccessUpdate: true
-            })
+        this._loadApiSuccess();
+       getGCCApiDatas("possess")
+       .then(data => {
+
+           if(data.length >= 1 && !this.state.userSuccesses.includes("possess_1")) {
+            setToGccApiUserSuccess(1, 1);
+            showMessage({
+                message: "New Success !",
+                description: "Your first game !",
+                type: "success",
+            });
+           }
+
+           if(data.length >= 5 && !this.state.userSuccesses.includes("possess_5")) {
+            setToGccApiUserSuccess(1, 2);
+            showMessage({
+                message: "New Success !",
+                description: "Five games !",
+                type: "success",
+            });
+           }
+
+           if(data.length >= 10 && !this.state.userSuccesses.includes("possess_10")) {
+            setToGccApiUserSuccess(1, 3);
+            showMessage({
+                message: "New Success !",
+                description: "Ten games !",
+                type: "success",
+            });
+           }
+
+        });
+       getGCCApiDatas("wanted")
+       .then(data => {
+
+        if(data.length >= 1 && !this.state.userSuccesses.includes("wanted_1")) {
+         setToGccApiUserSuccess(1, 4);
+         showMessage({
+             message: "New Success !",
+             description: "You want this !",
+             type: "success",
+         });
         }
+
+        if(data.length >= 5 && !this.state.userSuccesses.includes("wanted_5")) {
+         setToGccApiUserSuccess(1, 5);
+         showMessage({
+             message: "New Success !",
+             description: "Five games wanted !",
+             type: "success",
+         });
+        }
+
+        if(data.length >= 10 && !this.state.userSuccesses.includes("wanted_10")) {
+         setToGccApiUserSuccess(1, 6);
+         showMessage({
+             message: "New Success !",
+             description: "Ten games wanted !",
+             type: "success",
+         });
+        }
+
+       });
     }
 
     _possessButton(id) {
@@ -61,6 +121,7 @@ export default class GameFullDescription extends Component {
                 backgroundColor='#2c5'
                 title='I GOT IT !'
                 onPress={() => {
+                    this._checkSuccess();
                     showMessage({
                         message: "Game added",
                         description: "Well done ! One more game !",
@@ -102,12 +163,13 @@ export default class GameFullDescription extends Component {
                 backgroundColor='#5bf'
                 title='I WANT IT !'
                 onPress={() => {
+                    this._checkSuccess();
                     showMessage({
                         message: "Game added",
                         description: "Well done ! One more game !",
                         type: "info",
                     });
-                    setToGCCApi(id, "info"),
+                    setToGCCApi(id, "wanted"),
                         this.setState({
                             wantedGame: true,
                         })

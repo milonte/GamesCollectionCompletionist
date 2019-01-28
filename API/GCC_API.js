@@ -76,6 +76,28 @@ export function getGccApiUserSuccesses(user) {
         .catch((err) => console.error(err))
 }
 
+export function setToGccApiUserSuccess(user, successId) {
+    const URL = LOCAL_IP + '/success/add';
+
+    const HEADERS = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "successId": successId,
+            "userId": 1
+        }),
+    };
+
+    fetch(URL, HEADERS)
+        //.then((resp) => console.log(resp._bodyText))
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err))
+}
+
 export function setToGCCApi(gameId, category) {
     const URL = LOCAL_IP + '/games/'+category+'/add';
 
