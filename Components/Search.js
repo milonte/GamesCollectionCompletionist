@@ -63,16 +63,12 @@ export default class Search extends React.Component {
         return (
             <View style={styles.container}>
                 <SearchBar
-                    lightTheme
+                    darkTheme
                     onChangeText={(text) => this._searchTextInputChanged(text)}
-                    placeholder='Type Here...' />
-                <Button
-                    raised
-                    icon={{ name: 'cached' }}
-                    backgroundColor='#5bf'
-                    title='SEARCH'
-                    onPress={(t) => this._loadDatas(t)} />
-
+                    placeholder='Type Here...' 
+                    inputStyle={styles.input}
+                    onSubmitEditing={(t) => this._loadDatas(t)}/>
+                
                 <FlatList
                     data={this.state.games}
                     keyExtractor={(item) => item.id.toString()}
@@ -89,15 +85,10 @@ export default class Search extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 5,
     },
     input: {
-        backgroundColor: 'white',
-        padding: 5,
-        marginBottom: 5,
         textAlign: 'center',
-        borderRadius: 5,
-        borderBottomWidth: 1,
-        borderColor: 'rgba(0,0,0,.1)',
+        fontWeight: 'bold',
+        fontSize: 20,
     }
 });
