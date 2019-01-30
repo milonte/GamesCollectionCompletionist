@@ -29,7 +29,7 @@ export default class GameFullDescription extends Component {
         });
     }
 
-    _checkSuccess() {
+    _checkPossessSuccess() {
         this._loadApiSuccess();
        getGCCApiDatas("possess")
        .then(data => {
@@ -39,7 +39,8 @@ export default class GameFullDescription extends Component {
             showMessage({
                 message: "New Success !",
                 description: "Your first game !",
-                type: "success",
+                type: "warning",
+                icon: "success",
             });
            }
 
@@ -62,6 +63,9 @@ export default class GameFullDescription extends Component {
            }
 
         });
+    }
+
+    _checkWantedSuccess() {
        getGCCApiDatas("wanted")
        .then(data => {
 
@@ -121,7 +125,7 @@ export default class GameFullDescription extends Component {
                 backgroundColor='#2c5'
                 title='I GOT IT !'
                 onPress={() => {
-                    this._checkSuccess();
+                    this._checkPossessSuccess();
                     showMessage({
                         message: "Game added",
                         description: "Well done ! One more game !",
@@ -163,7 +167,7 @@ export default class GameFullDescription extends Component {
                 backgroundColor='#5bf'
                 title='I WANT IT !'
                 onPress={() => {
-                    this._checkSuccess();
+                    this._checkWantedSuccess();
                     showMessage({
                         message: "Game added",
                         description: "Well done ! One more game !",
