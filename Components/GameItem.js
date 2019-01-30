@@ -21,7 +21,7 @@ export default class GameItemShort extends React.Component {
                         possessedGame: data
                     });
                 });
-                getGCCApiData(this.props.game.id, "wanted")
+            getGCCApiData(this.props.game.id, "wanted")
                 .then(data => {
                     this.setState({
                         wantedGame: data
@@ -51,6 +51,7 @@ export default class GameItemShort extends React.Component {
         if (game.release_dates) {
             releaseDate = monthNames[game.release_dates[0].m] + ' ' + game.release_dates[0].y;
         }
+        let ImageElt = <Image style={styles.illustration} source={{ uri: imageUri }} />;
         if (game.platforms) {
             game.platforms.sort((a, b) => {
                 if (a.generation < b.generation) return -1;
@@ -60,21 +61,23 @@ export default class GameItemShort extends React.Component {
             platformElt = <Text style={styles.platforms}>{game.platforms[0].name}</Text>;
         }
         if (possessedGame) {
-            possessedElt = <View style={styles.details}>
-                <Icon styles={styles.possessedIcon} name='check' type='font-awesome' color='green' />
-                <Text style={styles.possessedText}>You got it !</Text>
+            ImageElt = <Image style={styles.illustration} source={{ uri: imageUri }} />;
+            possessedElt = <View style={styles.possessDetails}>
+                <Icon raised styles={styles.possessedIcon} name='check' type='font-awesome' color='green' size={12} />
             </View>
         }
         if (wantedGame && !possessedGame) {
-            wantedElt = <View style={styles.details}>
-                <Icon styles={styles.wantedIcon} name='bookmark' type='font-awesome' color='#5bf' />
-                <Text style={styles.wantedText}>You want it !</Text>
+            ImageElt = <Image style={styles.illustration} source={{ uri: imageUri }} />;
+            wantedElt = <View style={styles.possessDetails}>
+                <Icon raised styles={styles.wantedIcon} name='bookmark' type='font-awesome' color='#5bf' size={12} />
             </View>
         }
         return (
             <TouchableOpacity onPress={() => this.props.nav.navigate('GameDetails', { game, possessedGame, wantedGame })} style={styles.container}>
                 <View>
-                    <Image style={styles.illustration} source={{ uri: imageUri }} />
+                    {ImageElt}
+                    {possessedElt}
+                    {wantedElt}
                 </View>
                 <View style={styles.infos}>
                     <View style={styles.title}>
@@ -83,8 +86,6 @@ export default class GameItemShort extends React.Component {
                     <Text>{releaseDate}</Text>
                     <Text>{platformElt}</Text>
                 </View>
-                {possessedElt}
-                {wantedElt}
             </TouchableOpacity>
         )
     }
@@ -93,15 +94,13 @@ export default class GameItemShort extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        height: 112,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        alignItems: 'center',
-        marginBottom: 15,
+        marginBottom: 5,
         borderWidth: 1,
-        borderColor: 'rgba(0,0,0,.1)',
-        borderRadius: 10,
+        borderColor: 'rgba(0,0,0,.3)',
         backgroundColor: 'white',
-        padding: 10,
     },
     platformLogo: {
         height: 20,
@@ -109,20 +108,21 @@ const styles = StyleSheet.create({
     },
     infos: {
         flex: 1,
-        padding: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
-
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     illustration: {
         alignItems: 'center',
+        alignSelf: 'center',
         width: 80,
-        height: 120,
+        height: 110,
         resizeMode: 'contain',
-        marginLeft: 5,
+        margin: 0,
+        backgroundColor: "#222",
     },
     title: {
         flexDirection: 'row',
+        paddingTop: 10,
         paddingBottom: 10,
         borderBottomWidth: 1,
         borderColor: 'rgba(0,0,0,.1)',
@@ -138,18 +138,21 @@ const styles = StyleSheet.create({
         right: 0,
         color: "green",
     },
-    details: {
-        borderTopWidth: 1,
-        borderColor: 'rgba(0,0,0,.1)',
+    possessDetails: {
+        position: 'absolute',
+        left: -7,
+        top: -7,
+    },
+  /*   wantedDetails: {
         width: "100%",
         justifyContent: 'center',
         flexDirection: 'row',
         paddingTop: 5,
-        //backgroundColor: 'rgba(0,150,0,.4)'
-    },
-    possessedIcon: {
-        
-    },
+        paddingBottom: 5,
+    }, */
+ /*    possessedIcon: {
+
+    }, */
     possessedText: {
         color: 'green',
         alignSelf: 'center',

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { getGCCApiDatas } from '../API/GCC_API';
 import { getIgdbIdSearchData } from '../API/IGDB_API';
 import { StyleSheet, View, FlatList, ScrollView, RefreshControl } from 'react-native';
+import { LinearGradient } from 'expo';
 import { Text, Icon } from 'react-native-elements';
 import GameItemShort from './GameItem';
 
@@ -19,7 +20,7 @@ export default class PossessedGames extends Component {
     }
 
     _loadDatas() {
-        this.setState({refreshing:true})
+        this.setState({ refreshing: true })
         let searchGames = [];
         let fields = 'name,rating,platforms.name,platforms.generation,platforms.platform_logo.url,popularity,rating,release_dates.m,release_dates.y,cover.url,slug,summary';
         // Search games from local API Database
@@ -40,7 +41,7 @@ export default class PossessedGames extends Component {
                 this.setState({ possessedGames: "empty" });
             }
         });
-        this.setState({refreshing:false})
+        this.setState({ refreshing: false })
     }
 
     render() {
@@ -57,35 +58,45 @@ export default class PossessedGames extends Component {
         }
         else if ("empty" == this.state.possessedGames) {
             return (
-                <View style={styles.textContainer}>
-                    <View style={styles.text}>
-                        <Text>No Games !</Text>
-                        <Text>Go to Search into the navigation bar to add games !</Text>
-                    </View>
-                </View>
+                <ScrollView style={styles.container} refreshControl={
+                    <RefreshControl
+                        onRefresh={() => this._loadDatas()}
+                        refreshing={this.state.refreshing}
+                    />
+                }>
+                    <Text style={styles.refreshText}>Scroll Top to refresh</Text>
+                    <LinearGradient colors={['#046020', '#719941']} start={[1, 0]} style={styles.possessLine}>
+                        <Icon styles={styles.icon} name='check' type='font-awesome' color='white' size={20} />
+                        <Text style={styles.possessText}>No game in your collection</Text>
+                    </LinearGradient>
+                </ScrollView>
             )
         } else {
             return (
-                <ScrollView  style={styles.container} refreshControl={
+                <ScrollView style={styles.container} refreshControl={
                     <RefreshControl
                         //tintColor={$.config.colors.style}
                         onRefresh={() => this._loadDatas()}
                         refreshing={this.state.refreshing}
                     />
                 }>
-                <Text style={styles.refreshText}>Scroll Top to refresh</Text>
-                <FlatList
-                    data={this.state.possessedGames}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={
-                        ({ item }) =>
-                            <GameItemShort
-                                game={item}
-                                nav={this.props.navigation}
-                                possessedGame={true}
-                            />
-                    }
-                />
+                    <Text style={styles.refreshText}>Scroll Top to refresh</Text>
+                    <LinearGradient colors={['#046020', '#719941']} start={[1, 0]} style={styles.possessLine}>
+                        <Icon styles={styles.icon} name='check' type='font-awesome' color='white' size={20} />
+                        <Text style={styles.possessText}>{this.state.possessedGames.length} games in your collection</Text>
+                    </LinearGradient>
+                    <FlatList
+                        data={this.state.possessedGames}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={
+                            ({ item }) =>
+                                <GameItemShort
+                                    game={item}
+                                    nav={this.props.navigation}
+                                    possessedGame={true}
+                                />
+                        }
+                    />
                 </ScrollView>)
         }
 
@@ -94,7 +105,7 @@ export default class PossessedGames extends Component {
 
 const styles = StyleSheet.create({
     container: {
-  padding: 5,
+        backgroundColor: "#333",
     },
     textContainer: {
         flex: 1,
@@ -109,8 +120,23 @@ const styles = StyleSheet.create({
     },
     refreshText: {
         color: 'grey',
-        padding:0,
+        padding: 0,
         textAlign: 'center',
-        
-    }
+    },
+    possessLine: {
+        flexDirection: 'row',
+        padding: 5,
+        borderWidth: 1,
+        borderColor: 'rgba(0,100,0,.8)',
+        paddingLeft: 20,
+        marginBottom: 5,
+    },
+    possessText: {
+        color: 'white',
+        paddingBottom: 5,
+        fontSize: 15,
+        fontWeight: 'bold',
+        paddingTop: 5,
+        paddingLeft: 15,
+    },
 })
