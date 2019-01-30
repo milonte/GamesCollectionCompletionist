@@ -1,11 +1,11 @@
 
 import React, { Component } from 'react';
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import PossessedGames from './PossessedGames';
 import WantedGames from './WantedGames';
 
-const LibraryNavigator = createBottomTabNavigator({
+const LibraryNavigator = createMaterialTopTabNavigator({
     PossessedGames: {
         screen: PossessedGames,
         navigationOptions: {
@@ -26,9 +26,20 @@ const LibraryNavigator = createBottomTabNavigator({
     },
 }, {
     tabBarOptions: {
+      showLabel: false,
       showIcon: true,
-      activeTintColor: '#5bf',
-      inactiveTintColor: 'gray',
+      activeTintColor: 'white',
+      inactiveTintColor: '#5bf',
+      style: {
+        backgroundColor: "#444",
+        indicatorStyle: {
+          color: 'red',
+        }
+      },
+      indicatorStyle: {
+        height: 50,
+        backgroundColor: "#5bf",
+      }
     },
   });
 
