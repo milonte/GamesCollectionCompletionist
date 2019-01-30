@@ -50,11 +50,11 @@ export default class HomeScreen extends Component {
                 <View style={styles.content}>
 
 
-                        <View style={styles.welcomeLine}>
-                            <Text style={styles.welcomeText}>Welcome back</Text>
-                            <Text style={styles.userText}>USER</Text>
-                            <Image style={{width: 300, height: 200}} source={require('../assets/logo.png')} />
-                        </View>
+                    <View style={styles.welcomeLine}>
+                        <Text style={styles.welcomeText}>Welcome back</Text>
+                        <Text style={styles.userText}>USER</Text>
+                        <Image style={{ width: 300, height: 200 }} source={require('../assets/logo.png')} />
+                    </View>
                     <View style={styles.stats}>
 
                         <LinearGradient colors={['#232526', '#414345']} start={[1, 0]} style={styles.statsLine}>

@@ -85,6 +85,7 @@ export default class Search extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: "#333",
     },
     input: {
         textAlign: 'center',
