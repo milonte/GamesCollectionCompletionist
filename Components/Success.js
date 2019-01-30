@@ -50,13 +50,13 @@ export default class Success extends Component {
             progressValue = 0;
         }
         return (
-            <View>
                 <ScrollView style={styles.container} refreshControl={
                     <RefreshControl
                         onRefresh={() => this._loadDatas()}
                         refreshing={this.state.refreshing}
                     />
                 }>
+                    <Text style={styles.refreshText}>Scroll Top to refresh</Text>
                     <View style={styles.bar}>
                         <Text style={styles.barText}>{userSuccessCount} successes on {successCount} complete !</Text>
                         <Progress.Bar
@@ -64,10 +64,9 @@ export default class Success extends Component {
                             width={300}
                             height={15}
                             borderRadius={5}
-                            color='green'
+                            color='white'
                         />
                     </View>
-                    {/*                     <Text style={styles.refreshText}>Scroll Top to refresh</Text> */}
                     <FlatList
                         data={this.state.successes}
                         keyExtractor={(item) => item.id.toString()}
@@ -81,12 +80,19 @@ export default class Success extends Component {
                         }
                     />
                 </ScrollView>
-            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#333",
+    },
+    refreshText: {
+        color: 'grey',
+        padding: 0,
+        textAlign: 'center',
+    },
     bar: {
         paddingTop: 20,
         paddingBottom: 20,
@@ -95,7 +101,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     barText: {
-        color: 'green',
+        color: 'white',
         paddingBottom: 5,
         fontWeight: 'bold',
     },
