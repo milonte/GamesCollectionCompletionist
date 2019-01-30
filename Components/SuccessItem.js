@@ -48,7 +48,7 @@ export default class SuccessItem extends React.Component {
                         <View style={styles.title}>
                             <Text style={styles.titleText}>{success.title}</Text>
                         </View>
-                        <Text>{success.description}</Text>
+                        <Text style={styles.description}>{success.description}</Text>
                     </View>
                 </View>
             </View>
@@ -59,26 +59,25 @@ export default class SuccessItem extends React.Component {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        //maxWidth: 350,
-        backgroundColor: 'white',
-        padding: 5,
     },
     noGetSuccess: {
+        backgroundColor: '#eee',
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
         borderWidth: 1,
-        borderRadius: 10,
         borderColor: 'rgba(0,0,0,.1)',
+        marginBottom: 5,
     },
     getSuccess: {
+        backgroundColor: 'white',
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
         borderWidth: 1,
-        borderRadius: 10,
         borderColor: 'green',
-        backgroundColor: 'rgba(50,180,100,.1)',
+        //backgroundColor: 'rgba(50,180,100,.1)',
+        marginBottom: 5,
     },
     platformLogo: {
         height: 20,
@@ -108,6 +107,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'rgba(20,160,250,.8)',
         textAlign: 'center',
+        fontSize: 17,
     },
     possessed: {
         position: 'absolute',
@@ -125,9 +125,10 @@ const styles = StyleSheet.create({
         //backgroundColor: 'rgba(0,150,0,.4)'
     },
     possessedIcon: {
-
+        paddingTop: 5,
     },
     possessedText: {
+        alignItems: 'center',
         color: 'green',
         alignSelf: 'center',
         marginLeft: 10,
@@ -137,4 +138,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginLeft: 10,
     },
+    description: {
+        paddingTop: 5,
+        paddingLeft: 20,
+    }
 });
